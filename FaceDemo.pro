@@ -21,15 +21,15 @@ LIBS += -L/usr/local/lib \
         -lopencv_flann
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    framereader.cpp \
-    videosource.cpp
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/framereader.cpp \
+    src/videosource.cpp
 
 FORMS += \
-    mainwindow.ui
+    forms/src/mainwindow.ui
 
 HEADERS += \
-    mainwindow.h \
-    framereader.h \
-    videosource.h
+    include/mainwindow.h \
+    include/framereader.h \
+    include/videosource.h

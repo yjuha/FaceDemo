@@ -33,3 +33,5 @@ HEADERS += \
     include/mainwindow.h \
     include/framereader.h \
     include/videosource.h
+
+INCLUDEPATH += ./include

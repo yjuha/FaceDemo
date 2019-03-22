@@ -7,14 +7,14 @@ VideoSource::VideoSource(const int width, const int height, const int camIdx) :
 {
 }
 
-bool FrameReader::isOpened()
+bool VideoSource::isOpened()
 {
     return cap.isOpened();
 }
 
-VideoSource::queryFrame()
+cv::Mat VideoSource::queryFrame()
 {
-    Mat frame;
+    cv::Mat frame;
     cap >> frame;
     return frame;
 }

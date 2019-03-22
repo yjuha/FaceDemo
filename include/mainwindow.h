@@ -24,8 +24,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    QWidget widgedVideoSource;
+    QWidget widgetVideoSource;
     QLabel labelVideoSource;
+
+    FrameReader frameReader;
+    QThread frameReaderThread;
 };
 
 #endif // MAINWINDOW_H

@@ -10,7 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Create here a FrameReader object and make a thread
-    connect(&reader, SIGNAL(frameReady()), this, SLOT(refreshWindows()));
+    frameReader.moveToThread(&frameReaderThread);
+    frameReader.start();
+
+    connect(&frameReader, SIGNAL(frameReady()), this, SLOT(refreshWindows()));
     // obj.start();
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0,0,0,0);
@@ -18,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     widgetVideoSource.setParent(this);
     widgetVideoSource.setWindowFlags(Qt::Window);
-    widgetVideoSource.resize(FrameProcesser::frameSize(sourceFilename));
+    widgetVideoSource.resize(FrameReader::get_frameSize());
     widgetVideoSource.setWindowTitle("FaceDemo");
-    widgetVideoSource.setLayout(layout1);
+    widgetVideoSource.setLayout(layout);
     widgetVideoSource.show();
     widgetVideoSource.move(0, 0);
 }
@@ -31,7 +34,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-MainWindow::refreshWindows()
+void MainWindow::refreshWindows()
 {
-    labelVideoSource.setPixmap(QPixmap::fromImage(reader.get_frame()));
+    labelVideoSource.setPixmap(QPixmap::fromImage(frameReader.get_frame()));
 }

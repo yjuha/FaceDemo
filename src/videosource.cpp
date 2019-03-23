@@ -5,6 +5,7 @@ VideoSource::VideoSource(const int width, const int height, const int camIdx) :
     winHeight(height),
     cap(camIdx)
 {
+    cap.open(-1);
 }
 
 bool VideoSource::isOpened()

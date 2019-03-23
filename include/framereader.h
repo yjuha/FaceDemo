@@ -7,6 +7,7 @@
 #include <QMutex>
 #include <QSize>
 #include <QImage>
+#include "opencv2/opencv.hpp"
 
 class FrameReader : public QObject
 {
@@ -16,14 +17,17 @@ public:
 
     static QSize get_frameSize();
     const QImage get_frame();
+    void set_frame(const cv::Mat& data);
     void start();
 
 signals:
-    void startFrameReader();
-    void frameReady();
+    void signalInitFrameReader();
+    void signalReadFrame();
+    void signalFrameReady();
 
 public slots:
     void initFrameReader();
+    void readFrame();
 
 private:
     QMutex mutex;

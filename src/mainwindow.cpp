@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QApplication>
+#include <QDebug>
 #include <QVBoxLayout>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,8 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     frameReader.moveToThread(&frameReaderThread);
     frameReader.start();
 
-    connect(&frameReader, SIGNAL(frameReady()), this, SLOT(refreshWindows()));
-    // obj.start();
+    connect(&frameReader, SIGNAL(signalFrameReady()), this, SLOT(refreshWindows()));
+    frameReaderThread.start();
+
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(&labelVideoSource);

@@ -1,9 +1,12 @@
 #include "framereader.h"
 #include <QDebug>
+#include <QtGlobal>
+#include <QMutexLocker>
 
 FrameReader::FrameReader(QObject *parent) : QObject(parent), frameWidth(320), frameHeight(240)
 {
-    connect(this, SIGNAL(startFrameReader()), this, SLOT(initFrameReader()), Qt::QueuedConnection);
+    connect(this, SIGNAL(signalInitFrameReader()), this, SLOT(initFrameReader()), Qt::QueuedConnection);
+    connect(this, SIGNAL(signalReadFrame()), this, SLOT(readFrame()), Qt::QueuedConnection);
 }
 
 QSize FrameReader::get_frameSize()
@@ -25,9 +28,17 @@ const QImage FrameReader::get_frame()
     return qframe;
 }
 
+void FrameReader::set_frame(const cv::Mat& data)
+{
+    QMutexLocker locker(&mutex);
+
+    data.copyTo(frame);
+
+}
+
 void FrameReader::start()
 {
-    emit startFrameReader();
+    emit signalInitFrameReader();
 }
 
 void FrameReader::initFrameReader()
@@ -37,11 +48,22 @@ void FrameReader::initFrameReader()
 
     if ( !cap->isOpened() )
     {
-        //qDebuq() << "Failed to open webcam, demo not started.";
+        qDebug() << "Failed to open webcam, demo not started.";
         return;
     }
 
     frame.create(cap->get_height(), cap->get_width(), CV_8UC3);
-    //qDebuq() << "Webcam is alive!";
+    qDebug() << "Webcam is alive!";
 
+    emit signalReadFrame();
+
+}
+
+void FrameReader::readFrame()
+{
+    qDebug() << "Reading frame";
+    cv::Mat frame = cap->queryFrame();
+    set_frame(frame);
+    emit signalFrameReady();
+    emit signalReadFrame();
 }

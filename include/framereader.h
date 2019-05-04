@@ -2,6 +2,7 @@
 #define FRAMEREADER_H
 
 #include "videosource.h"
+#include "facetracker.h"
 #include <QObject>
 #include <QScopedPointer>
 #include <QMutex>
@@ -18,7 +19,7 @@ public:
     static QSize get_frameSize();
     const QImage get_frame();
     void set_frame(const cv::Mat& data);
-    void start();
+    void start(); // this start() barely emits a signalInitFrameReader signal
 
 signals:
     void signalInitFrameReader();
@@ -32,6 +33,7 @@ public slots:
 private:
     QMutex mutex;
     QScopedPointer<VideoSource> cap;
+    QScopedPointer<FaceTracker> tracker;
 
     // Shared data (protected by mutex)
     cv::Mat frame;

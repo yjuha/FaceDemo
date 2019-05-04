@@ -14,14 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Create here a FrameReader object and make a thread
     frameReader.moveToThread(&frameReaderThread);
-    frameReader.start();
+    frameReader.start(); // initialize frameReader
 
     connect(&frameReader, SIGNAL(signalFrameReady()), this, SLOT(refreshWindows()));
     frameReaderThread.start();
 
-    QVBoxLayout *layout = new QVBoxLayout();
+    QHBoxLayout *layout = new QHBoxLayout();
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(&labelVideoSource);
+    layout->addWidget(&labelVideoSource2);
 
     widgetVideoSource.setParent(this);
     widgetVideoSource.setWindowFlags(Qt::Window);
@@ -41,4 +42,5 @@ MainWindow::~MainWindow()
 void MainWindow::refreshWindows()
 {
     labelVideoSource.setPixmap(QPixmap::fromImage(frameReader.get_frame()));
+    labelVideoSource2.setPixmap(QPixmap::fromImage(frameReader.get_frame()));
 }

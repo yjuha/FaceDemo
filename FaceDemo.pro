@@ -5,7 +5,7 @@ QT = core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-INCLUDEPATH += /usr/local/include/opencv
+INCLUDEPATH += /usr/local/include/opencv4
 
 LIBS += -L/usr/local/lib \
         -lopencv_core \
@@ -18,13 +18,15 @@ LIBS += -L/usr/local/lib \
         -lopencv_features2d \
         -lopencv_calib3d \
         -lopencv_objdetect \
-        -lopencv_flann
+        -lopencv_flann \
+        -lopencv_face
 
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/framereader.cpp \
-    src/videosource.cpp
+    src/videosource.cpp \
+    src/facetracker.cpp
 
 FORMS += \
     forms/src/mainwindow.ui
@@ -32,6 +34,10 @@ FORMS += \
 HEADERS += \
     include/mainwindow.h \
     include/framereader.h \
-    include/videosource.h
+    include/videosource.h \
+    include/facetracker.h
 
 INCLUDEPATH += ./include
+
+DISTFILES += \
+    haarcascade_frontalface_alt_tree.xml

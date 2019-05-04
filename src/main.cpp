@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <cstdio>
 
+// message handler for debug messages
 void myMessageOutput(QtMsgType, const QMessageLogContext& context, const QString& msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
@@ -23,7 +24,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow w;
-    w.show();
+    //w.show();
 
     return a.exec();
 }

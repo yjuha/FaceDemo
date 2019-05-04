@@ -45,6 +45,7 @@ void FrameReader::initFrameReader()
 {
     // Deletes the existing object it is pointing to (if any), and sets the pointer to new VideoSource object
     cap.reset(new VideoSource(frameWidth, frameHeight));
+    tracker.reset(new FaceTracker());
 
     if ( !cap->isOpened() )
     {
@@ -54,6 +55,7 @@ void FrameReader::initFrameReader()
 
     frame.create(cap->get_height(), cap->get_width(), CV_8UC3);
     qDebug() << "Webcam is alive!";
+    tracker->init();
 
     emit signalReadFrame();
 
@@ -63,6 +65,7 @@ void FrameReader::readFrame()
 {
     qDebug() << "Reading frame";
     cv::Mat frame = cap->queryFrame();
+    cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
     set_frame(frame);
     emit signalFrameReady();
     emit signalReadFrame();

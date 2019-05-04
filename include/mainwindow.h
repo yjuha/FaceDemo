@@ -26,6 +26,7 @@ private:
 
     QWidget widgetVideoSource;
     QLabel labelVideoSource;
+    QLabel labelVideoSource2;
 
     FrameReader frameReader;
     QThread frameReaderThread;

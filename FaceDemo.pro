@@ -40,4 +40,5 @@ HEADERS += \
 INCLUDEPATH += ./include
 
 DISTFILES += \
-    haarcascade_frontalface_alt_tree.xml
+    haarcascade_frontalface_alt_tree.xml \
+    lbfmodel.yaml

@@ -4,6 +4,18 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/face.hpp"
 
+struct Config {
+    // This part is taken directly from OpenCV's "Using FaceMark API" example
+    Config(cv::String s, double d) {
+        model_path = s;
+        scaleFactor = d;
+        face_detector.load(model_path);
+    }
+    cv::String model_path;
+    double scaleFactor;
+    cv::CascadeClassifier face_detector;
+};
+
 class FaceTracker
 {
 public:
@@ -12,7 +24,9 @@ public:
 
     bool init();
 private:
-    cv::CascadeClassifier facecascade;
+    //cv::CascadeClassifier facecascade;
+    Config* detector_config;
+    cv::Ptr<cv::face::FacemarkLBF> facemark;
 
 };
 

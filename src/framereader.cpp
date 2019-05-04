@@ -66,6 +66,9 @@ void FrameReader::readFrame()
     qDebug() << "Reading frame";
     cv::Mat frame = cap->queryFrame();
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
+
+    tracker->track(frame);
+
     set_frame(frame);
     emit signalFrameReady();
     emit signalReadFrame();

@@ -23,8 +23,9 @@ public:
     ~FaceTracker() {}
 
     bool init();
+    bool track(cv::Mat& frame);
 private:
-    //cv::CascadeClassifier facecascade;
+
     Config* detector_config;
     cv::Ptr<cv::face::FacemarkLBF> facemark;
 
